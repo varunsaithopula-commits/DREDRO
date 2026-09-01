@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package com.upstox.marketdata.feed.v2;
+
+enum Type {
+  initial_feed = 0;
+  live_feed = 1;
+}
+
+message QuoteOHLC {
+  double open = 1;
+  double high = 2;
+  double low = 3;
+  double close = 4;
+  int64 ts = 5;
+}
+
+message MarketOHLC {
+  repeated QuoteOHLC ohlc = 1;
+}
+
+message LTPC {
+  double ltp = 1;
+  int64 ltt = 2;
+  double ltq = 3;
+  double cp = 4;
+}
+
+message MarketFullFeed {
+  LTPC ltpc = 1;
+  MarketOHLC marketOHLC = 2;
+}
+
+message IndexFullFeed {
+  LTPC ltpc = 1;
+  MarketOHLC indexOHLC = 2;
+}
+
+message FullFeed {
+  oneof feed {
+    MarketFullFeed marketFF = 1;
+    IndexFullFeed indexFF = 2;
+  }
+}
+
+message Feed {
+  oneof FeedUnion {
+    LTPC ltpc = 1;
+    FullFeed fullFeed = 2;
+  }
+}
+
+message FeedResponse {
+  Type type = 1;
+  map<string, Feed> feeds = 2;
+  int64 currentTs = 3;
+}
