@@ -1,460 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BudgetMate - Fast, offline-capable personal expense tracker with budget tracking, analytics, and data tools.">
-  <title>BudgetMate | Personal Expense Tracker</title>
-  
-  <!-- Fonts -->
+  <meta http-equiv="refresh" content="0; url=http://localhost:3000">
+  <title>DREGRO | Nifty 50 Smart Money Concepts Trading App</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- Google Identity Services SDK for Google Sign-In -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #070a11;
+      color: #f1f5f9;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    .card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      max-width: 480px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    a.btn {
+      display: inline-block;
+      background: #0284c7;
+      color: #ffffff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      transition: background 0.2s;
+    }
+    a.btn:hover {
+      background: #0369a1;
+    }
+  </style>
 </head>
 <body>
-
-  <!-- App Header -->
-  <header class="app-header">
-    <div class="header-container">
-      <a href="#" class="brand" aria-label="BudgetMate Home">
-        <div class="brand-icon">B</div>
-        <span class="brand-name">BudgetMate</span>
-      </a>
-
-      <div class="header-actions">
-        <!-- User Profile Pill when Logged In -->
-        <div id="user-header-profile" class="user-profile-badge" style="display: none;">
-          <div id="user-avatar-badge" class="user-avatar-circle">U</div>
-          <span id="user-display-name" class="user-display-name">User</span>
-          <button id="btn-logout" class="btn btn-ghost btn-sm" title="Sign Out" aria-label="Sign Out">
-            Sign Out
-          </button>
-        </div>
-
-        <button id="btn-open-settings" class="btn btn-secondary btn-icon" title="Settings & Data Tools" aria-label="Settings and Data Tools">
-          ⚙️
-        </button>
-        <button id="btn-open-add" class="btn btn-primary" aria-label="Add new transaction">
-          <span>+ Add Transaction</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Auth / Login & Sign Up View -->
-  <section id="auth-container" class="auth-page-wrapper">
-    <div class="auth-card">
-      <div class="auth-brand-header">
-        <div class="brand-icon auth-brand-icon">B</div>
-        <h1 class="auth-title">BudgetMate</h1>
-        <p class="auth-subtitle">Fast, simple personal expense tracker & budget manager</p>
-      </div>
-
-      <!-- Alert Message Box -->
-      <div id="auth-alert" class="auth-alert" style="display: none;"></div>
-
-      <!-- Google Sign In Button -->
-      <div class="google-auth-wrapper">
-        <button id="google-login-btn" class="btn google-btn" type="button">
-          <svg class="google-icon" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z" fill="#4285F4"/>
-            <path d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.53-1.78.9-3.12.9-2.38 0-4.41-1.57-5.13-3.74L.97 13.04C2.45 15.98 5.48 18 9 18z" fill="#34A853"/>
-            <path d="M3.87 10.78c-.19-.53-.3-1.1-.3-1.78s.11-1.25.3-1.78L.97 4.96C.35 6.18 0 7.55 0 9s.35 2.82.97 4.04l2.9-2.26z" fill="#FBBC05"/>
-            <path d="M9 3.58c1.32 0 2.5.46 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0 5.48 0 2.45 2.02.97 4.96l2.9 2.26C4.59 5.05 6.62 3.58 9 3.58z" fill="#EA4335"/>
-          </svg>
-          <span id="google-btn-text">Sign In / Sign Up with Google</span>
-        </button>
-      </div>
-
-      <div class="auth-guest-option">
-        <button id="btn-guest-login" type="button" class="btn btn-ghost btn-sm" style="width: 100%; color: var(--text-muted);">
-          Continue as Guest
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Main Application Content -->
-  <main class="main-content">
-    
-    <!-- LEFT / DASHBOARD PANEL -->
-    <aside class="dashboard-panel" aria-label="Dashboard Statistics">
-      
-      <!-- Month Navigator Card -->
-      <section class="card">
-        <div class="month-navigator">
-          <button id="btn-prev-month" class="btn btn-ghost btn-icon" title="Previous Month" aria-label="Previous Month">◀</button>
-          <span id="current-month-label" class="month-label">August 2026</span>
-          <button id="btn-next-month" class="btn btn-ghost btn-icon" title="Next Month" aria-label="Next Month">▶</button>
-        </div>
-
-        <!-- Metrics Grid -->
-        <div class="metrics-grid">
-          <div id="card-income-balance" class="metric-card" style="cursor: pointer;" title="Tap to view balance popup">
-            <span class="metric-label">Income</span>
-            <span id="metric-income" class="metric-value income">₹0.00</span>
-          </div>
-          <div id="card-expense-balance" class="metric-card" style="cursor: pointer;" title="Tap to view balance popup">
-            <span class="metric-label">Expenses</span>
-            <span id="metric-expense" class="metric-value expense">₹0.00</span>
-          </div>
-          <div id="card-net-balance" class="metric-card" style="cursor: pointer;" title="Tap to view balance popup">
-            <span class="metric-label">Net Balance</span>
-            <span id="metric-net" class="metric-value net">₹0.00</span>
-          </div>
-        </div>
-
-        <!-- Budget Progress Widget -->
-        <div class="budget-widget">
-          <div class="budget-header">
-            <span class="budget-title">Monthly Budget</span>
-            <span id="budget-stats" class="budget-stats">₹0 / ₹35,000</span>
-          </div>
-          <div class="budget-bar-track">
-            <div id="budget-bar-fill" class="budget-bar-fill" style="width: 0%;"></div>
-          </div>
-          <div id="budget-status-badge" class="budget-status-badge normal">
-            On Track (0%)
-          </div>
-        </div>
-      </section>
-
-      <!-- Category Breakdown Card -->
-      <section class="card">
-        <div class="card-header">
-          <h2 class="card-title">Top Categories</h2>
-        </div>
-        <div id="category-breakdown-list" class="category-list">
-          <!-- Dynamically Populated -->
-        </div>
-      </section>
-
-      <!-- Spending Trend Canvas Chart -->
-      <section class="card">
-        <div class="card-header">
-          <h2 class="card-title">Daily Spend Trend</h2>
-        </div>
-        <div class="chart-container">
-          <canvas id="trend-canvas" width="340" height="180" aria-label="Daily expense trend line chart" role="img"></canvas>
-        </div>
-      </section>
-    </aside>
-
-    <!-- RIGHT / TRANSACTIONS LIST PANEL -->
-    <section class="tx-section" aria-label="Transactions Log">
-      
-      <!-- Search & Filters Bar -->
-      <div class="filter-bar">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="search" id="search-input" class="search-input" placeholder="Search notes or categories..." aria-label="Search transactions">
-        </div>
-
-        <div class="filter-controls">
-          <select id="filter-type" class="form-select" aria-label="Filter by Type">
-            <option value="all">All Types</option>
-            <option value="expense">Expenses Only</option>
-            <option value="income">Income Only</option>
-          </select>
-
-          <select id="filter-category" class="form-select" aria-label="Filter by Category">
-            <option value="all">All Categories</option>
-            <option value="Food & Dining">Food & Dining</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Bills & Utilities">Bills & Utilities</option>
-            <option value="Transportation">Transportation</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Health & Wellness">Health & Wellness</option>
-            <option value="Salary">Salary</option>
-            <option value="Investment">Investment</option>
-            <option value="Freelance">Freelance</option>
-            <option value="Other">Other</option>
-          </select>
-
-          <select id="sort-order" class="form-select" aria-label="Sort Transactions">
-            <option value="date-desc">Date (Newest First)</option>
-            <option value="date-asc">Date (Oldest First)</option>
-            <option value="amount-desc">Amount (High to Low)</option>
-            <option value="amount-asc">Amount (Low to High)</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Grouped Transactions List -->
-      <div id="tx-groups-container" class="tx-groups">
-        <!-- Dynamically Populated Day Groups or Empty State -->
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Mobile Floating Action Button -->
-  <button id="fab-add" class="fab" title="Add Transaction" aria-label="Add Transaction">
-    <span style="font-size: 1.5rem; line-height: 1;">+</span>
-  </button>
-
-  <!-- MODAL: ADD / EDIT TRANSACTION -->
-  <div id="tx-modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="tx-modal-title">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <h2 id="tx-modal-title" class="modal-title">Add Transaction</h2>
-        <button id="btn-close-tx-modal" class="btn btn-ghost btn-icon" aria-label="Close modal">✕</button>
-      </div>
-      
-      <form id="tx-form" novalidate>
-        <div class="modal-body">
-          <input type="hidden" id="tx-id">
-
-          <!-- Type Selection -->
-          <div class="form-group">
-            <label class="form-label">Transaction Type</label>
-            <div class="type-toggle">
-              <button type="button" id="type-btn-expense" class="type-btn active expense">Expense</button>
-              <button type="button" id="type-btn-income" class="type-btn income">Income</button>
-            </div>
-            <input type="hidden" id="tx-type" value="expense">
-          </div>
-
-          <!-- Amount -->
-          <div class="form-group">
-            <label for="tx-amount" class="form-label">Amount (*)</label>
-            <input type="number" id="tx-amount" class="form-input" placeholder="0.00" step="0.01" min="0.01" required>
-            <span id="err-amount" class="tx-note" style="color: var(--color-error); display: none;">Please enter a valid amount > 0</span>
-          </div>
-
-          <!-- Category & Payment Method -->
-          <div class="form-row">
-            <div class="form-group">
-              <label for="tx-category" class="form-label">Category (*)</label>
-              <select id="tx-category" class="form-select" required>
-                <option value="">Select Category</option>
-                <option value="Food & Dining">Food & Dining</option>
-                <option value="Shopping">Shopping</option>
-                <option value="Bills & Utilities">Bills & Utilities</option>
-                <option value="Transportation">Transportation</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Health & Wellness">Health & Wellness</option>
-                <option value="Salary">Salary</option>
-                <option value="Investment">Investment</option>
-                <option value="Freelance">Freelance</option>
-                <option value="Other">Other</option>
-              </select>
-              <span id="err-category" class="tx-note" style="color: var(--color-error); display: none;">Category is required</span>
-            </div>
-
-            <div class="form-group">
-              <label for="tx-payment" class="form-label">Payment Method</label>
-              <select id="tx-payment" class="form-select">
-                <option value="UPI">UPI / Online</option>
-                <option value="Credit Card">Credit Card</option>
-                <option value="Debit Card">Debit Card</option>
-                <option value="Cash">Cash</option>
-                <option value="Bank Transfer">Bank Transfer</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Date & Note -->
-          <div class="form-group">
-            <label for="tx-date" class="form-label">Date (*)</label>
-            <input type="date" id="tx-date" class="form-input" required>
-            <span id="err-date" class="tx-note" style="color: var(--color-error); display: none;">Valid date is required</span>
-          </div>
-
-          <div class="form-group">
-            <label for="tx-note" class="form-label">Note / Description</label>
-            <input type="text" id="tx-note" class="form-input" placeholder="e.g. Lunch with team" maxlength="120">
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" id="btn-cancel-tx" class="btn btn-secondary">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Transaction</button>
-        </div>
-      </form>
-    </div>
+  <div class="card">
+    <h1>DREGRO Trading Desk</h1>
+    <p>Nifty 50 Real-Time Smart Money Concepts (SMC) & AI Market Analytics Dashboard</p>
+    <a href="http://localhost:3000" class="btn">Launch Dashboard (http://localhost:3000)</a>
   </div>
-
-  <!-- MODAL: SETTINGS & DATA TOOLS -->
-  <div id="settings-modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <h2 id="settings-modal-title" class="modal-title">Settings & Data Tools</h2>
-        <button id="btn-close-settings-modal" class="btn btn-ghost btn-icon" aria-label="Close modal">✕</button>
-      </div>
-
-      <div class="modal-body">
-        
-        <!-- Preferences -->
-        <h3 class="card-title" style="font-size: 0.9rem;">Preferences</h3>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="setting-currency" class="form-label">Currency Symbol</label>
-            <select id="setting-currency" class="form-select">
-              <option value="₹">₹ (INR)</option>
-              <option value="$">$ (USD)</option>
-              <option value="€">€ (EUR)</option>
-              <option value="£">£ (GBP)</option>
-              <option value="¥">¥ (JPY)</option>
-              <option value="A$">A$ (AUD)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="setting-budget" class="form-label">Monthly Budget</label>
-            <input type="number" id="setting-budget" class="form-input" min="0" step="500" placeholder="e.g. 35000">
-          </div>
-        </div>
-
-        <hr style="border: 0; border-top: 1px solid var(--border-subtle); margin: var(--space-2) 0;">
-
-        <!-- Data Tools -->
-        <h3 class="card-title" style="font-size: 0.9rem;">Data Import & Export</h3>
-        <div style="display: flex; flex-direction: column; gap: var(--space-3);">
-          
-          <button id="btn-export-csv" class="btn btn-secondary" style="justify-content: flex-start;">
-            <span>📥 Export Transactions to CSV</span>
-          </button>
-
-          <div>
-            <input type="file" id="import-json-input" accept=".json" style="display: none;">
-            <button id="btn-import-json" class="btn btn-secondary" style="justify-content: flex-start; width: 100%;">
-              <span>📤 Import Data from JSON</span>
-            </button>
-            <span id="import-status-msg" class="tx-note" style="margin-top: 4px; display: block;"></span>
-          </div>
-        </div>
-
-        <hr style="border: 0; border-top: 1px solid var(--border-subtle); margin: var(--space-2) 0;">
-
-        <!-- Reset Area -->
-        <h3 class="card-title" style="font-size: 0.9rem; color: var(--color-error);">Danger Zone</h3>
-        <button id="btn-trigger-reset" class="btn btn-destructive" style="justify-content: flex-start;">
-          <span>🗑 Reset All Application Data</span>
-        </button>
-      </div>
-
-      <div class="modal-footer">
-        <button id="btn-save-settings" class="btn btn-primary">Save Preferences</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: RESET CONFIRMATION -->
-  <div id="reset-modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title">
-    <div class="modal-dialog" style="max-width: 400px;">
-      <div class="modal-header">
-        <h2 id="reset-modal-title" class="modal-title" style="color: var(--color-error);">Reset All Data?</h2>
-        <button id="btn-close-reset-modal" class="btn btn-ghost btn-icon" aria-label="Close modal">✕</button>
-      </div>
-      <div class="modal-body">
-        <p style="font-size: var(--font-size-sm); color: var(--text-secondary);">
-          This action will permanently erase all stored transactions, budgets, and settings. This action cannot be undone.
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button id="btn-cancel-reset" class="btn btn-secondary">Cancel</button>
-        <button id="btn-confirm-reset" class="btn btn-destructive">Yes, Clear All Data</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: BALANCE BREAKDOWN POPUP -->
-  <div id="balance-modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="balance-modal-title">
-    <div class="modal-dialog" style="max-width: 440px;">
-      <div class="modal-header">
-        <h2 id="balance-modal-title" class="modal-title">Monthly Balance Summary</h2>
-        <button id="btn-close-balance-modal" class="btn btn-ghost btn-icon" aria-label="Close modal">✕</button>
-      </div>
-      <div class="modal-body">
-        <div style="text-align: center; padding: 4px 0 12px;">
-          <span id="pop-month-subtitle" style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">Net Balance</span>
-          <div id="pop-net-value" style="font-size: 2.2rem; font-weight: 700; font-family: var(--font-mono); margin-top: 4px; color: var(--text-primary);">₹0.00</div>
-        </div>
-
-        <div style="background-color: #000000; border: 1px solid #222222; border-radius: var(--radius-md); padding: 16px; display: flex; flex-direction: column; gap: 12px; color: #FFFFFF;">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: #AAAAAA; font-size: 14px;">Total Income (+)</span>
-            <span id="pop-income-value" style="color: #10B981; font-weight: 700; font-family: var(--font-mono); font-size: 16px;">₹0.00</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #222222; padding-top: 12px;">
-            <span style="color: #AAAAAA; font-size: 14px;">Total Expenses (-)</span>
-            <span id="pop-expense-value" style="color: #EF4444; font-weight: 700; font-family: var(--font-mono); font-size: 16px;">₹0.00</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #222222; padding-top: 12px;">
-            <span style="color: #AAAAAA; font-size: 14px;">Net Difference</span>
-            <span id="pop-calc-value" style="font-weight: 700; font-family: var(--font-mono); font-size: 16px;">₹0.00</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #222222; padding-top: 12px;">
-            <span style="color: #AAAAAA; font-size: 14px;">Total Transactions Logged</span>
-            <span id="pop-tx-count" style="font-weight: 600; font-family: var(--font-mono); font-size: 14px;">0 entries</span>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button id="btn-done-balance-pop" class="btn btn-primary" style="width: 100%;">Close Summary</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: GOOGLE SIGN IN PROMPT -->
-  <div id="google-modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="google-modal-title">
-    <div class="modal-dialog" style="max-width: 420px;">
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <svg width="22" height="22" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z" fill="#4285F4"/>
-            <path d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.53-1.78.9-3.12.9-2.38 0-4.41-1.57-5.13-3.74L.97 13.04C2.45 15.98 5.48 18 9 18z" fill="#34A853"/>
-            <path d="M3.87 10.78c-.19-.53-.3-1.1-.3-1.78s.11-1.25.3-1.78L.97 4.96C.35 6.18 0 7.55 0 9s.35 2.82.97 4.04l2.9-2.26z" fill="#FBBC05"/>
-            <path d="M9 3.58c1.32 0 2.5.46 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0 5.48 0 2.45 2.02.97 4.96l2.9 2.26C4.59 5.05 6.62 3.58 9 3.58z" fill="#EA4335"/>
-          </svg>
-          <h2 id="google-modal-title" class="modal-title" style="font-size: 1.1rem;">Sign in with Google</h2>
-        </div>
-        <button id="btn-close-google-modal" class="btn btn-ghost btn-icon" aria-label="Close modal">✕</button>
-      </div>
-      <form id="google-prompt-form" novalidate>
-        <div class="modal-body" style="gap: var(--space-4);">
-          <p style="font-size: var(--font-size-sm); color: var(--text-muted); margin-bottom: var(--space-1);">
-            Sign in to BudgetMate using your Google Account.
-          </p>
-
-          <div class="form-group">
-            <label for="google-input-email" class="form-label">Google Email Address (*)</label>
-            <input type="email" id="google-input-email" class="form-input" placeholder="varunsaithopula@gmail.com" required>
-            <span id="err-google-email" class="tx-note" style="color: var(--color-error); display: none;">Valid Google email is required</span>
-          </div>
-
-          <div class="form-group">
-            <label for="google-input-name" class="form-label">Full Name</label>
-            <input type="text" id="google-input-name" class="form-input" placeholder="e.g. Varun Sai Thopula">
-          </div>
-
-          <details style="font-size: var(--font-size-xs); color: var(--text-muted); cursor: pointer;">
-            <summary style="font-weight: 500; margin-bottom: 6px;">Google Cloud OAuth Setup (Optional)</summary>
-            <div class="form-group" style="margin-top: 6px;">
-              <label for="google-input-clientid" class="form-label" style="font-size: 11px;">Client ID (from GCP Console)</label>
-              <input type="text" id="google-input-clientid" class="form-input" placeholder="123456...apps.googleusercontent.com" style="font-size: var(--font-size-xs); font-family: var(--font-mono);">
-            </div>
-          </details>
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="btn-cancel-google-modal" class="btn btn-secondary">Cancel</button>
-          <button type="submit" class="btn btn-primary" style="background-color: #1A73E8; border-color: #1A73E8;">Sign In with Google</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- TOAST / SNACKBAR CONTAINER FOR UNDO -->
-  <div id="toast-container" class="toast-container" aria-live="polite"></div>
-
-  <!-- ES Module Application JavaScript -->
-  <script type="module" src="app.js"></script>
-
+  <script>
+    window.location.href = "http://localhost:3000";
+  </script>
 </body>
 </html>
